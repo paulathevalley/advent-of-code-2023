@@ -82,10 +82,12 @@ fn main() {
     }
 
     let len = calibration.len();
+    let mut total: u32 = 0;
     for n in 1..len {
-        let digit = &calibration[n];
-        println!("{digit}")
+        let digit: &u32 = &calibration[n].parse().unwrap();
+        total = total + digit;
     }
+    println!("answer: {total}");
 }
 
 // before running a rust program, you must compile it first
