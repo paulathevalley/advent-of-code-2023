@@ -35,33 +35,43 @@ fn main() {
         for c in line.chars() {
             // Source: https://doc.rust-lang.org/std/primitive.char.html#method.is_digit
             if c.is_digit(10) {
+                // let mut digits = vec![];
+                // digits.push(c);
+                // can we do everything in here? unsure.
+
                 // concatenate all digits in vector
                 if calibration.len() == i + 1 {
+                    // if there is already an entry for this calibration, update it
                     let current = &calibration[i];
                     calibration[i] = format!("{current}{c}");
                 } else {
+                    // otherwise add new entry
                     calibration.push(String::from(c));
                 }
             }
+            // do we know when we've reached the last char in line?
         }
-        let mut current = &calibration[i];
+
         let len = calibration[i].len();
         if len == 1 {
+            let current = &calibration[i];
             // duplicate the first digit so there are 2 digits
-            // Source: rust compiler said to add `.to_owned()`
-            calibration[i] = (current.to_owned() + current).to_string();
-            current = &calibration[i];
+            // Source: rust compiler said to add `.to_owned()` if current is mutable
+            // calibration[i] = (current.to_owned() + current).to_string();
+            calibration[i] = format!("{current}{current}");
         }
-        println!("callibration: {current}");
         if len > 2 {
+            let current = &calibration[i];
+            let mut letters = vec![];
             // grab the 1st char & last char
-            // for c in current.chars() {
-            //     println!("hello {c}")
-            // }
+            for c in current.chars() {
+                letters.push(c.to_string());
+            }
+            let first = &letters[0];
+            let last = &letters[letters.len() - 1];
+            let combo = first.to_owned() + last;
+            calibration[i] = combo;
         }
-        // for x in &v {
-        //     println!("{}", v[x]);
-        // }
 
         // The following errors: `String` cannot be indexed by `usize`
         // Source: https://doc.rust-lang.org/stable/book/ch08-02-strings.html?highlight=String#indexing-into-strings
@@ -69,6 +79,12 @@ fn main() {
         //     println!("{}", line[n]);
         // }
         i = i + 1;
+    }
+
+    let len = calibration.len();
+    for n in 1..len {
+        let digit = &calibration[n];
+        println!("{digit}")
     }
 }
 
