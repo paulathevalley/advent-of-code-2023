@@ -52,6 +52,22 @@ fn main() {
             // do we know when we've reached the last char in line?
         }
 
+        // let ok: Vec<&str> = line.split_inclusive(char::is_numeric).collect();
+        // for n in ok {
+        //     println!("ok {n}");
+        // }
+
+        // let line_str = line.to_string();
+        // let neat: Vec<&str> = line_str.matches("one").collect();
+        // for n in neat {
+        //     println!("neat {n}");
+        // }
+
+        // Source: https://doc.rust-lang.org/std/primitive.str.html#method.starts_with
+        // if line.starts_with("eight") {
+        //     println!("hi there!");
+        // }
+
         let len = calibration[i].len();
         if len == 1 {
             let current = &calibration[i];
