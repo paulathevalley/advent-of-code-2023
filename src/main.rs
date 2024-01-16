@@ -23,18 +23,16 @@ fn main() {
 
     let lines: Vec<String> = read_lines(file_path);
 
-    let mut calibration: Vec<i32> = vec![];
+    let mut result = 0;
     // let mut i = 0;
 
     // // Consumes the iterator, returns an (Optional) String
     for line in lines {
         // line has type "alloc::string::String"
-        calibration.push(calibration_value(&line));
-    }
 
-    for c in calibration {
-        println!("calibration {c}");
+        result = result + calibration_value(&line);
     }
+    println!("result {result}");
 }
 
 fn calibration_value(line: &str) -> i32 {
@@ -53,6 +51,17 @@ fn part1_calibration_first_line() {
     let input = "1abc2";
     let output = calibration_value(&input);
     assert_eq!(output, 12);
+}
+
+#[test]
+fn part1_calibration_example() {
+    let lines = ["1abc2", "pqr3stu8vwx", "a1b2c3d4e5f", "treb7uchet"];
+    let mut result = 0;
+
+    for line in lines {
+        result = result + calibration_value(&line);
+    }
+    assert_eq!(result, 142);
 }
 
 // before running a rust program, you must compile it first
