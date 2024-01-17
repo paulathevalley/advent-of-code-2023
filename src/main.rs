@@ -23,20 +23,36 @@ fn main() {
 
     let lines: Vec<String> = read_lines(file_path);
 
-    let mut result = 0;
-    // let mut i = 0;
+    let mut part1 = 0;
+    // let mut part2 = 0;
 
     // // Consumes the iterator, returns an (Optional) String
     for line in lines {
         // line has type "alloc::string::String"
-
-        result = result + calibration_value(&line);
+        part1 = part1 + part1_calibration_value(&line);
+        // part2 = part2 + part2_calibration_value(&line);
     }
-    println!("result {result}");
+    println!("part1 {part1}");
+    // println!("part2 {part2}");
+    let output = part2_calibration_value("two1nine");
+    println!("two1nine: {output}");
+    let output2 = part2_calibration_value("eightwothree");
+    println!("eightwothree: {output2}");
 }
 
-fn calibration_value(line: &str) -> i32 {
+fn part1_calibration_value(line: &str) -> i32 {
     let digits: Vec<&str> = line.matches(char::is_numeric).collect();
+
+    let first_digit = &digits[0];
+    let last_digit = &digits[digits.len() - 1];
+
+    let result: i32 = format!("{first_digit}{last_digit}").parse().unwrap();
+
+    return result;
+}
+
+fn part2_calibration_value(line: &str) -> i32 {
+    let digits: Vec<&str> = line.matches(char::is_numeric | "one").collect();
 
     let first_digit = &digits[0];
     let last_digit = &digits[digits.len() - 1];
@@ -49,7 +65,7 @@ fn calibration_value(line: &str) -> i32 {
 #[test]
 fn part1_calibration_first_line() {
     let input = "1abc2";
-    let output = calibration_value(&input);
+    let output = part1_calibration_value(&input);
     assert_eq!(output, 12);
 }
 
@@ -59,9 +75,28 @@ fn part1_calibration_example() {
     let mut result = 0;
 
     for line in lines {
-        result = result + calibration_value(&line);
+        result = result + part1_calibration_value(&line);
     }
     assert_eq!(result, 142);
+}
+
+#[test]
+fn part2_calibration_example() {
+    let lines = [
+        "two1nine",
+        "eightwothree",
+        "abcone2threexyz",
+        "xtwone3four",
+        "4nineeightseven2",
+        "zoneight234",
+        "7pqrstsixteen",
+    ];
+    let mut result = 0;
+
+    for line in lines {
+        result = result + part2_calibration_value(&line);
+    }
+    assert_eq!(result, 281);
 }
 
 // before running a rust program, you must compile it first
